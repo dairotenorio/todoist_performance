@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test_mac": "artillery run --output results/report.json ./tests/performance_tasks.yml && artillery report --output results/report.html results/report.json",
+    "test_mac": "artillery run --output results/report.json performance_tasks.yml && artillery report --output results/report.html results/report.json",
     "report_mac": "open './results/report.html'"
   },
   "keywords": [],
