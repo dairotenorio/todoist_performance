@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test_mac": "npx newman run './tests/api/collection/Todoist.postman_collection.json' -e './tests/api/envVariables/TodoistTasks.postman_environment.json' -r htmlextra --reporter-htmlextra-export './tests/api/reports/report.html' -d './tests/api/data/tasksToCreate.csv' && open './tests/api/reports/report.html'",
-    "report_mac": "open './tests/api/reports/report.html'"
+    "test_mac": "artillery run --output results/report.json ./tests/performance_tasks.yml && artillery report --output results/report.html results/report.json",
+    "report_mac": "open './results/report.html'"
   },
   "keywords": [],
   "author": "Dairo Tenorio",
   "license": "ISC",
   "dependencies": {
-    "newman": "^5.2.2",
-    "newman-reporter-htmlextra": "^1.20.1"
+    "artillery": "^1.6.2",
+    "faker": "^5.1.0"
   }
 }

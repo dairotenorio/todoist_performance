@@ -1,0 +1,44 @@
+config:
+  target: "https://api.todoist.com"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Phase 1"
+    - duration: 120
+      arrivalRate: 6
+      name: "Phase 2"
+    - duration: 1
+      arrivalRate: 3
+      name: "Phase 3"
+  defaults:
+    headers:
+      Authorization: Bearer {{ $processEnvironment.TOKEN }}
+      Content-type: application/json
+  ##processor: "./myProcessor.js"
+scenarios:
+  - flow:
+      - get:
+          url: "/rest/v1/tasks"
+      - post:
+          url: "/rest/v1/tasks"
+          json:
+            content: "Study Artillery"
+            due_string: "tomorrow at 06:00"
+            due_lang: "fr"
+            priority: 1
+          capture:
+            json: "$.id"
+            as: "id"
+      - log: "Current id is {{ id }}"
+      - get:
+          url: "/rest/v1/tasks/{{ id }}"
+      - post:
+          url: "/rest/v1/tasks/{{ id }}"
+          json:
+            name: "Drink colombian coffee"
+      - post:
+          url: /rest/v1/tasks/{{ id }}/close
+      - post:
+          url: /rest/v1/tasks/{{ id }}/reopen
+      - delete:
+          url: "/rest/v1/tasks/{{ id }}"

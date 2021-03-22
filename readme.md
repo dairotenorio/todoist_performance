@@ -1,11 +1,6 @@
-# Automation framework Wizeline API challenge exercises
-    This document explains how to install and run the API automation project.
-    The goal of this project is to automate API test with POSTMAN.
-
-    Notes: in case we want to run this project in a CI/CD and avoid risking the system using credential inside the code, we may want to implement something like this in the scripts of the CI/CD machine: 
-        json -I -f environmentVariables.json -e "this.token='token_value'"
-    -I -f activates in-place editing that writes updates to the input file
-    -e executes the supplied expression on the input JSON object
+# Automation framework Wizeline Performance challenge exercises
+    This document explains how to install and run the Performance automation project.
+    The goal of this project is to automate a Performance test with Artillery.
  
  ## Initial set up
     Install node.js
@@ -15,11 +10,11 @@
     It's recommended to use the versions listed below for the following packages to guarantee a correct functionality:
     - node version = 12.18.4
     - npm version  >= 6.14.5
-    - newman >= 5.2.2
-    - newman-reporter-htmlextra >= 1.20.1
+    - faker >= 5.1.0
+    - artillery >= 1.6.2
 
 ## Clone and update
-    Clone the repository on GIT: https://github.com/dairotenorio/todoist
+    Clone the repository on GIT: https://github.com/dairotenorio/todoist_performance
     Update to the main branch and then run commands
  
 **Install Dependencies**
