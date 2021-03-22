@@ -1,0 +1,844 @@
+{
+	"info": {
+		"_postman_id": "1f7df6d5-3964-4835-993d-6b07c8e38ebc",
+		"name": "Todoist",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tasks",
+			"item": [
+				{
+					"name": "Get active tasks",
+					"item": [
+						{
+							"name": "Get active tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});",
+											"",
+											"var contentArray = [",
+											"    'Click this task to see more details',",
+											"    'You can add subtasks here! ✅',",
+											"    'This is a task. Drag it to the \"Doing\" section',",
+											"    'Switch between Board and List view from the three-dot project menu',",
+											"    'Add a \"Done\" section by pressing Add Section',",
+											"    'Add a new task ➕',",
+											"    'Schedule this task 📅',",
+											"    'Add a section from the project menu in the top right `...`',",
+											"    'Click **+** next to Projects to add one of your own',",
+											"    '[Kickstart your projects with Templates →](https://todoist.com/templates?utm_source=todoist&utm_medium=in_app&utm_campaign=welcome_project)',",
+											"    '[Learn how to use Todoist with the Guide →](https://todoist.com/getting-started?utm_source=todoist&utm_medium=in_app&utm_campaign=welcome_project)',",
+											"    '[Get organized anywhere with the Apps →](https://todoist.com/downloads?focus=mobile&utm_source=todoist&utm_medium=in_app&utm_campaign=welcome_project)',",
+											"    '[Questions? Need more tips? Visit the Help Center →](https://todoist.com/help/?utm_source=todoist&utm_medium=in_app&utm_campaign=welcome_project)'",
+											"];",
+											"",
+											"var contentArrayIdx = 0;",
+											"var jsonData = pm.response.json();",
+											"pm.test('Content is correct', () => {",
+											"    _.each(jsonData, (item) => {",
+											"        pm.expect(item.content).to.include(contentArray[contentArrayIdx]);",
+											"        contentArrayIdx++;",
+											"    });",
+											"});",
+											"",
+											"var Ajv = require('ajv'),",
+											"    ajv = new Ajv({logger: console}),",
+											"    schema = {",
+											"    \"items\": {",
+											"        \"required\": [",
+											"            \"id\",",
+											"            \"assigner\",",
+											"            \"project_id\",",
+											"            \"section_id\",",
+											"            \"order\",",
+											"            \"content\",",
+											"            \"completed\",",
+											"            \"label_ids\",",
+											"            \"priority\",",
+											"            \"comment_count\",",
+											"            \"creator\",",
+											"            \"created\",",
+											"            \"url\"",
+											"        ],",
+											"        \"properties\": {",
+											"            \"id\": {",
+											"                \"$id\": \"#/items/properties/id\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"assigner\": {",
+											"                \"$id\": \"#/items/properties/assigner\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"project_id\": {",
+											"                \"$id\": \"#/items/properties/project_id\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"section_id\": {",
+											"                \"$id\": \"#/items/properties/section_id\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"order\": {",
+											"                \"$id\": \"#/items/properties/order\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"content\": {",
+											"                \"$id\": \"#/items/properties/content\",",
+											"                \"type\": \"string\"",
+											"            },",
+											"            \"completed\": {",
+											"                \"$id\": \"#/items/properties/completed\",",
+											"                \"type\": \"boolean\"",
+											"            },",
+											"            \"label_ids\": {",
+											"                \"$id\": \"#/items/properties/label_ids\",",
+											"                \"type\": \"array\"",
+											"            },",
+											"            \"priority\": {",
+											"                \"$id\": \"#/items/properties/priority\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"comment_count\": {",
+											"                \"$id\": \"#/items/properties/comment_count\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"creator\": {",
+											"                \"$id\": \"#/items/properties/creator\",",
+											"                \"type\": \"integer\"",
+											"            },",
+											"            \"created\": {",
+											"                \"$id\": \"#/items/properties/created\",",
+											"                \"type\": \"string\"",
+											"            },",
+											"            \"url\": {",
+											"                \"$id\": \"#/items/properties/url\",",
+											"                \"type\": \"string\"",
+											"            }",
+											"        },",
+											"        \"$id\": \"#/items\",",
+											"        \"type\": \"object\"",
+											"    },",
+											"    \"type\": \"array\",",
+											"    \"definitions\": {}",
+											"};",
+											"",
+											"pm.test('Json chema is valid', function() {",
+											"    pm.expect(ajv.validate(schema, pm.response.json()), JSON.stringify(ajv.errors)).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get active tasks negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 403\", function () {",
+											"    pm.response.to.be.forbidden;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": \"1234567890\"\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Create a new task",
+					"item": [
+						{
+							"name": "Create a new task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"",
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});",
+											"",
+											"var taskContent = pm.variables.get(\"contentBDD\");",
+											"pm.test('Content is correct', function () {",
+											"    pm.expect(jsonData.content).to.eql(taskContent);",
+											"});",
+											"",
+											"pm.environment.set(\"taskId\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer $token",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"{{contentBDD}}\",\n    \"due_string\": \"{{due_stringBDD}}\",\n    \"due_lang\": \"{{due_langBDD}}\",\n    \"priority\": {{priorityBDD}}\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a new task negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer $token",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": 1,\n    \"due_string\": \"Tomorrow afternoon\",\n    \"due_lang\": \"chinese\",\n    \"priority\": \"second\"\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}",
+									"host": [
+										"{{baseURL}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Get an active task",
+					"item": [
+						{
+							"name": "Get an active task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});",
+											"",
+											"var taskContent = pm.variables.get(\"contentBDD\");",
+											"pm.test('Content is correct', function () {",
+											"    pm.expect(jsonData.content).to.eql(taskContent);",
+											"});",
+											"",
+											"var Ajv = require('ajv'),",
+											"    ajv = new Ajv({logger: console}),",
+											"    schema = {",
+											"    \"required\": [",
+											"        \"id\",",
+											"        \"assigner\",",
+											"        \"project_id\",",
+											"        \"section_id\",",
+											"        \"order\",",
+											"        \"content\",",
+											"        \"completed\",",
+											"        \"label_ids\",",
+											"        \"priority\",",
+											"        \"comment_count\",",
+											"        \"creator\",",
+											"        \"created\",",
+											"        \"due\",",
+											"        \"url\"",
+											"    ],",
+											"    \"properties\": {",
+											"        \"id\": {",
+											"            \"$id\": \"#/properties/id\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"assigner\": {",
+											"            \"$id\": \"#/properties/assigner\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"project_id\": {",
+											"            \"$id\": \"#/properties/project_id\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"section_id\": {",
+											"            \"$id\": \"#/properties/section_id\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"order\": {",
+											"            \"$id\": \"#/properties/order\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"content\": {",
+											"            \"$id\": \"#/properties/content\",",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"completed\": {",
+											"            \"$id\": \"#/properties/completed\",",
+											"            \"type\": \"boolean\"",
+											"        },",
+											"        \"label_ids\": {",
+											"            \"$id\": \"#/properties/label_ids\",",
+											"            \"type\": \"array\"",
+											"        },",
+											"        \"priority\": {",
+											"            \"$id\": \"#/properties/priority\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"comment_count\": {",
+											"            \"$id\": \"#/properties/comment_count\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"creator\": {",
+											"            \"$id\": \"#/properties/creator\",",
+											"            \"type\": \"integer\"",
+											"        },",
+											"        \"created\": {",
+											"            \"$id\": \"#/properties/created\",",
+											"            \"type\": \"string\"",
+											"        },",
+											"        \"due\": {",
+											"            \"required\": [",
+											"                \"recurring\",",
+											"                \"string\",",
+											"                \"date\",",
+											"                \"datetime\",",
+											"                \"timezone\"",
+											"            ],",
+											"            \"properties\": {",
+											"                \"recurring\": {",
+											"                    \"$id\": \"#/properties/due/properties/recurring\",",
+											"                    \"type\": \"boolean\"",
+											"                },",
+											"                \"string\": {",
+											"                    \"$id\": \"#/properties/due/properties/string\",",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"date\": {",
+											"                    \"$id\": \"#/properties/due/properties/date\",",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"datetime\": {",
+											"                    \"$id\": \"#/properties/due/properties/datetime\",",
+											"                    \"type\": \"string\"",
+											"                },",
+											"                \"timezone\": {",
+											"                    \"$id\": \"#/properties/due/properties/timezone\",",
+											"                    \"type\": \"string\"",
+											"                }",
+											"            },",
+											"            \"$id\": \"#/properties/due\",",
+											"            \"type\": \"object\"",
+											"        },",
+											"        \"url\": {",
+											"            \"$id\": \"#/properties/url\",",
+											"            \"type\": \"string\"",
+											"        }",
+											"    },",
+											"    \"type\": \"object\",",
+											"    \"definitions\": {}",
+											"};",
+											"",
+											"pm.test('Json chema is valid', function() {",
+											"    pm.expect(ajv.validate(schema, pm.response.json()), JSON.stringify(ajv.errors)).to.be.true;",
+											"});",
+											"",
+											"pm.environment.set(\"activeTaskBody\", jsonData);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get an active task negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/1234567890",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"1234567890"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Update a task",
+					"item": [
+						{
+							"name": "Update a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"/*var myVar = pm.environment.get(\"activeTaskBody\");",
+											"myVar.content = 'Jajajaja';",
+											"",
+											"",
+											"var JSONData = new Buffer(JSON.stringify(myVar)).toString();",
+											"pm.environment.set(\"activeTaskBody\", JSONData);",
+											"console.log(\"JSONDATA\", JSONData);*/"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer $token",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"content\": \"Buy Coffee\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-Requested-Id",
+										"value": "$(uuidgen)",
+										"type": "text"
+									},
+									{
+										"warning": "This is a duplicate header and will be overridden by the Authorization header generated by Postman.",
+										"key": "Authorization",
+										"value": "Bearer $token",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": true\n}"
+								},
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Change a task status to complete",
+					"item": [
+						{
+							"name": "Change a task status to complete",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}/close",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}",
+										"close"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change a task status to complete negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}/closed",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}",
+										"closed"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Reopen task",
+					"item": [
+						{
+							"name": "Reopen task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}/reopen",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}",
+										"reopen"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Reopen task negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {",
+											"    pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}/reopened",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}",
+										"reopened"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Delete a task",
+					"item": [
+						{
+							"name": "Delete a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 2xx\", function () {",
+											"    pm.response.to.be.success;",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/{{taskId}}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"{{taskId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete a task negative",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 400\", function () {",
+											"    pm.response.to.have.status(400);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/1111111111111",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"1111111111111"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Response time is less than 2000ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+					"});"
+				]
+			}
+		}
+	]
+}
