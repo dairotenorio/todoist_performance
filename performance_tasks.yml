@@ -2,9 +2,16 @@ config:
   target: "https://api.todoist.com"
   processor: "./dataGenerator.js"
   phases:
-    - duration: 1
-      arrivalRate: 1
-      name: "Phase 1"
+    - duration: 60
+      arrivalRate: 50
+      name: "Warm up load"
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 20
+      name: "Ramp up load"
+    - duration: 420
+      arrivalRate: 50
+      name: "Maximum load"
   defaults:
     headers:
       Authorization: Bearer {{ $processEnvironment.TOKEN }}
@@ -36,5 +43,5 @@ scenarios:
           url: /rest/v1/tasks/{{ id }}/close
       - post:
           url: /rest/v1/tasks/{{ id }}/reopen
-      ##- delete:
-        ##  url: "/rest/v1/tasks/{{ id }}"
+      - delete:
+          url: "/rest/v1/tasks/{{ id }}"
